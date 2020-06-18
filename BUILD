@@ -1,0 +1,10 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_foreign_cc//for_workspace:cmake_build.bzl", "cmake_tool")
+load("@rules_foreign_cc//tools/build_defs:boost_build.bzl", "boost_build")
+
+toolchain(
+    name = "built_cmake_toolchain",
+    toolchain = "@rules_foreign_cc//tools/build_defs/native_tools:built_cmake",
+    toolchain_type = "@rules_foreign_cc//tools/build_defs:cmake_toolchain",
+)
