@@ -11,16 +11,15 @@ int main(int argc, char *argv[]) {
     string demoUri = "https://www.api-football.com/demo/v2";
     web::http::client::http_client client(demoUri,config);
     unsigned short englishPremierLeagueId=524;
+    
     //typically one would need to add an api key to all requests, below is one way to do so. However in our case
     // neither key presence nor key validity is checked in football-api's demo environment, so intercepting the request
     //to add the api key header is for demonstration purposes only..
-
     auto request_interceptor =
             [](web::http::http_request request, std::shared_ptr<web::http::http_pipeline_stage> next_stage) -> pplx::task<web::http::http_response>
             {       request.headers().add("X-RapidAPI-Key","fake-key-not-checked-in-demo-environemt");
                     return next_stage->propagate(request);
             };
-
     client.add_handler(request_interceptor);
 
     web::http::uri_builder builder(U("fixtures/league/"+ std::to_string(englishPremierLeagueId)));
